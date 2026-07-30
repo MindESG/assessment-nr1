@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>> StratGeek.Wear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+</style>
+<style>
+:root{
+  --neon:#B85EFF;--purple:#6A0DAD;--black:#0A0A0A;--white:#FFFFFF;
+  --off-white:#F7F7F5;--gray-light:#EFEFED;--gray-mid:#9A9898;--gray-dark:#4A4A4A;
+  --font-head:'Space Grotesk',sans-serif;--font-body:'IBM Plex Sans',sans-serif;
+  --font-mono:'Space Mono',monospace;--font-orb:'Orbitron',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--white);color:var(--black);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(184,94,255,0.15);display:grid;grid-template-rows:auto auto;padding:0.75rem 5%;height:auto;gap:0.25rem;}
+nav .nav-top{display:flex;justify-content:space-between;align-items:center;}
+nav .nav-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gray-light);padding-top:0.5rem;}
+.nav-logo{font-family:var(--font-head);font-size:1.5rem;font-weight:700;text-decoration:none;display:flex;align-items:center;color:var(--black);white-space:nowrap;line-height:1;letter-spacing:-.02em;}
+.nl-w{color:var(--neon);}
+.nav-logo:visited,.nav-logo:hover{color:var(--black);text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--gray-dark);text-decoration:none;transition:.2s;}
+.nav-links a:hover{color:var(--neon);}
+.nav-right{display:flex;gap:.75rem;align-items:center;}
+.nav-cta{background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.78rem;font-weight:700;padding:.5rem 1.2rem;border-radius:4px;text-decoration:none;letter-spacing:.04em;transition:.2s;}
+.nav-cta:hover{background:var(--purple);}
+.nav-personalizar{background:transparent;border:1.5px solid var(--neon);color:var(--neon);font-family:var(--font-head);font-size:.78rem;font-weight:700;padding:.5rem 1.1rem;border-radius:4px;text-decoration:none;letter-spacing:.04em;transition:.2s;}
+.nav-personalizar:hover{background:var(--neon);color:#fff;}
+
+.page{display:none;padding-top:66px;}
+.page.active{display:block;}
+
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--neon);margin-bottom:.9rem;display:block;}
+h2.sec-title{font-family:var(--font-head);font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin-bottom:.9rem;}
+h2.sec-title em{font-style:normal;color:var(--neon);}
+.sec-sub{font-size:.95rem;line-height:1.75;color:var(--gray-dark);max-width:560px;margin-bottom:2.5rem;}
+.btn-primary{background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.85rem;font-weight:700;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none;letter-spacing:.04em;transition:.22s;border:2px solid var(--neon);display:inline-block;cursor:pointer;}
+.btn-primary:hover{background:var(--purple);border-color:var(--purple);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--black);font-family:var(--font-head);font-size:.85rem;font-weight:700;padding:.85rem 1.9rem;border-radius:4px;text-decoration:none;letter-spacing:.04em;transition:.22s;border:2px solid var(--black);display:inline-block;cursor:pointer;}
+.btn-outline:hover{border-color:var(--neon);color:var(--neon);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+.reveal.visible{opacity:1;transform:none;}
+
+.marquee-wrap{background:var(--black);padding:.9rem 0;overflow:hidden;}
+.marquee-track{display:flex;animation:marquee 24s linear infinite;white-space:nowrap;}
+.marquee-track span{font-family:var(--font-head);font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:0 1.8rem;color:var(--gray-mid);}
+.marquee-track span.hl{color:var(--neon);}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.benefits-bar{background:var(--off-white);padding:1rem 5%;display:flex;gap:1.5rem;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--gray-light);}
+.benefits-bar::-webkit-scrollbar{display:none;}
+.bitem{display:flex;align-items:center;gap:.55rem;white-space:nowrap;font-size:.78rem;font-weight:500;color:var(--gray-dark);}
+.bitem::before{content:'✦';color:var(--neon);font-size:.55rem;}
+
+/* GATILHO 5 — hero differentiator */
+.hero-differentiator{font-family:var(--font-head);font-size:.92rem;font-weight:600;color:var(--purple);border-left:3px solid var(--neon);padding-left:.85rem;margin-bottom:1.5rem;line-height:1.55;}
+
+.hero{min-height:calc(100vh - 66px);display:grid;grid-template-columns:1fr 1fr;}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:8% 6% 8% 8%;}
+.hero-drop{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--neon);margin-bottom:1.4rem;display:flex;align-items:center;gap:.6rem;}
+.hero-drop::before{content:'';width:28px;height:1px;background:var(--neon);}
+.hero h1{font-family:var(--font-head);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.4rem;}
+.hero h1 em{font-style:normal;color:var(--neon);}
+.hero-sub{font-size:.98rem;line-height:1.75;color:var(--gray-dark);max-width:440px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.hero-visual{background:var(--black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-visual::before{content:'> StratGeek.Wear';font-family:var(--font-head);font-size:9rem;font-weight:700;color:rgba(255,255,255,.03);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);white-space:nowrap;pointer-events:none;}
+.hero-mascot{width:min(460px,80%);position:relative;z-index:2;filter:drop-shadow(0 30px 60px rgba(184,94,255,.4));}
+.hero-badge{position:absolute;top:2rem;right:2rem;background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.7rem;font-weight:700;padding:.45rem .9rem;border-radius:3px;letter-spacing:.06em;z-index:3;}
+
+/* GATILHO FAIXA — entre hero e promoção */
+.differentiator-strip{background:var(--black);border-top:none;border-bottom:none;padding:2.5rem 8%;display:flex;justify-content:center;position:relative;overflow:hidden;}
+.differentiator-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(184,94,255,.15) 0%,transparent 70%);pointer-events:none;}
+.differentiator-strip blockquote{font-family:var(--font-head);font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:700;color:var(--white);text-align:center;max-width:700px;line-height:1.45;border:none;padding:0;font-style:normal;position:relative;z-index:1;}
+.differentiator-strip blockquote em{color:var(--neon);font-style:normal;display:block;margin-top:.2rem;}
+
+.featured{padding:5rem 8%;}
+.featured-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:2.5rem;}
+.feat-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;}
+.see-all{font-family:var(--font-head);font-size:.8rem;font-weight:700;color:var(--neon);text-decoration:none;letter-spacing:.03em;}
+.see-all:hover{text-decoration:underline;}
+
+/* GATILHO 2 — barra acima dos produtos */
+.products-differentiator{background:var(--white);border:1px solid rgba(184,94,255,.18);border-radius:7px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;}
+.products-differentiator p{font-family:var(--font-head);font-size:.82rem;font-weight:600;color:var(--gray-dark);line-height:1.4;}
+.products-differentiator p em{color:var(--purple);font-style:normal;}
+
+.stats-strip{background:var(--black);padding:4rem 8%;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.stat{text-align:center;}
+.stat-n{font-family:var(--font-head);font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:700;color:var(--neon);line-height:1;}
+.stat-l{font-size:.82rem;color:var(--gray-mid);margin-top:.5rem;line-height:1.45;}
+
+.mascot-section{padding:6rem 8%;background:var(--off-white);}
+.mascot-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.mascot-img-wrap{position:relative;}
+.mascot-img-wrap img{width:100%;border-radius:12px;display:block;}
+.mascot-glow{position:absolute;inset:0;border-radius:12px;box-shadow:0 0 60px rgba(184,94,255,.25);pointer-events:none;}
+
+.vote-section{background:var(--black);padding:5rem 8%;}
+.vote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem;}
+.vote-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(184,94,255,.2);border-radius:8px;padding:1.75rem 1.25rem;text-align:center;cursor:pointer;transition:.25s;position:relative;}
+.vote-card:hover,.vote-card.selected{background:rgba(184,94,255,.12);border-color:var(--neon);}
+.vote-card.selected::after{content:'✓';position:absolute;top:.6rem;right:.9rem;color:var(--neon);font-weight:700;font-size:1rem;}
+.vote-name{font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.5rem;}
+.vote-desc{font-size:.78rem;color:var(--gray-mid);line-height:1.6;}
+.vote-bar-wrap{margin-top:.85rem;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.vote-bar{height:100%;background:var(--neon);border-radius:2px;transition:width .8s ease;}
+.vote-count{font-size:.65rem;color:var(--neon);margin-top:.3rem;font-family:var(--font-mono);}
+.vote-btn-wrap{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.vote-result-msg{margin-top:1.25rem;font-size:.85rem;color:var(--neon);font-family:var(--font-mono);display:none;}
+
+.product-card{background:var(--off-white);border-radius:8px;overflow:hidden;transition:.25s;cursor:pointer;}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(184,94,255,.14);}
+.pc-img{background:var(--black);aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:.4s;}
+.product-card:hover .pc-img img{transform:scale(1.05);}
+.pc-emoji{font-size:4.5rem;}
+.pc-badge{position:absolute;top:.7rem;left:.7rem;background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.62rem;font-weight:700;padding:.22rem .55rem;border-radius:2px;letter-spacing:.06em;}
+.pc-badge.dark{background:var(--black);}
+.pc-body{padding:1.1rem;}
+.pc-cat{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--neon);margin-bottom:.3rem;}
+.pc-name{font-family:var(--font-head);font-size:.88rem;font-weight:600;margin-bottom:.5rem;line-height:1.35;}
+.pc-prices{margin-bottom:.4rem;}
+.pc-price-pix{font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--neon);}
+.pc-price-card{font-family:var(--font-head);font-size:.75rem;color:var(--gray-dark);}
+/* GATILHO 3 — tag de identidade nos cards */
+.pc-identity{font-size:.68rem;color:var(--gray-mid);font-style:italic;margin-bottom:.5rem;line-height:1.4;}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;}
+.pc-sizes{display:flex;gap:.2rem;margin-top:.3rem;}
+.sz{font-size:.6rem;font-weight:600;border:1px solid var(--gray-mid);padding:.12rem .32rem;border-radius:2px;color:var(--gray-dark);}
+.btn-comprar{background:var(--black);color:#fff;font-family:var(--font-head);font-size:.72rem;font-weight:700;padding:.45rem .9rem;border:none;border-radius:3px;cursor:pointer;letter-spacing:.03em;transition:.2s;text-decoration:none;}
+.btn-comprar:hover{background:var(--neon);}
+
+.colecoes-page{padding:0 8% 5rem;}
+.col-hero{background:var(--black);border-radius:0;padding:4rem 0;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;margin:0 -8% 3.5rem;padding-left:8%;padding-right:8%;}
+.col-hero h1{font-family:var(--font-head);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;color:var(--white);letter-spacing:-.02em;}
+.col-hero h1 em{font-style:normal;color:var(--neon);}
+.col-hero p{font-size:.92rem;color:var(--gray-mid);margin-top:.75rem;line-height:1.7;max-width:500px;}
+.col-mascot-mini{width:200px;filter:drop-shadow(0 0 30px rgba(184,94,255,.5));}
+.filter-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.pill{font-family:var(--font-body);font-size:.75rem;font-weight:600;padding:.4rem 1.1rem;border-radius:50px;border:1.5px solid var(--gray-mid);background:transparent;cursor:pointer;transition:.2s;color:var(--gray-dark);}
+.pill.active,.pill:hover{border-color:var(--neon);color:var(--neon);background:rgba(184,94,255,.07);}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.4rem;}
+.size-guide{background:var(--off-white);border-radius:8px;padding:2rem 2.5rem;margin-top:3.5rem;}
+.size-guide h3{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:1.25rem;}
+.size-table{width:100%;border-collapse:collapse;}
+.size-table th,.size-table td{padding:.65rem 1rem;text-align:center;font-size:.82rem;border-bottom:1px solid var(--gray-light);}
+.size-table th{font-family:var(--font-head);font-weight:700;color:var(--neon);}
+
+.personalizar-page{padding:3rem 8% 5rem;}
+.pers-hero{text-align:center;padding:3rem 0 2rem;}
+.pers-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start;margin-top:2.5rem;}
+.pers-form{display:flex;flex-direction:column;gap:1.5rem;}
+.form-section-title{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:.5rem;padding-bottom:.5rem;border-bottom:1px solid var(--gray-light);}
+.fg{display:flex;flex-direction:column;gap:.45rem;}
+.fg label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dark);}
+.fg input,.fg textarea,.fg select{background:var(--off-white);border:1.5px solid var(--gray-light);border-radius:5px;padding:.75rem 1rem;font-family:var(--font-body);font-size:.9rem;color:var(--black);outline:none;transition:.2s;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--neon);background:#fff;}
+.font-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;}
+.font-opt{border:1.5px solid var(--gray-light);border-radius:6px;padding:.85rem;cursor:pointer;transition:.2s;text-align:center;}
+.font-opt:hover,.font-opt.selected{border-color:var(--neon);background:rgba(184,94,255,.05);}
+.font-opt .fname{font-size:.75rem;font-weight:600;color:var(--gray-dark);margin-top:.35rem;}
+.font-opt .fprev{font-size:1.1rem;font-weight:600;}
+.font-space-grotesk .fprev{font-family:'Space Grotesk',sans-serif;}
+.font-ibm .fprev{font-family:'IBM Plex Sans',sans-serif;}
+.font-mono .fprev{font-family:'Space Mono',monospace;}
+.font-orb .fprev{font-family:'Orbitron',sans-serif;font-size:.85rem;}
+.pers-preview{position:sticky;top:80px;}
+.preview-box{background:var(--black);border-radius:12px;overflow:hidden;}
+.preview-shirt{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2.5rem;position:relative;}
+.preview-shirt-shape{width:200px;height:220px;background:#1a1a1a;border-radius:8px 8px 4px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:1.5rem;text-align:center;z-index:2;}
+.preview-phrase{font-size:1rem;font-weight:700;color:#fff;line-height:1.35;word-break:break-word;}
+.preview-logo-line{font-size:.6rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.08em;margin-top:.25rem;}
+.preview-logo-line span{color:var(--neon);}
+.preview-meta{padding:1.25rem 1.5rem;background:rgba(255,255,255,.04);}
+.preview-meta p{font-size:.75rem;color:var(--gray-mid);line-height:1.6;}
+.preview-meta strong{color:var(--white);}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+.sobre-page{padding:0;}
+.sobre-hero{background:var(--black);padding:6rem 8%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:70vh;}
+.sobre-hero-text .sec-title{color:var(--white);}
+.missao-grid{padding:5rem 8%;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.missao-card{background:var(--off-white);border-radius:8px;padding:2rem;border-top:4px solid var(--neon);}
+.missao-icon{font-size:2rem;margin-bottom:.75rem;}
+.missao-card h3{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.missao-card p{font-size:.85rem;color:var(--gray-dark);line-height:1.65;}
+.valores-section{padding:5rem 8%;background:var(--black);}
+.valores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.valor-card{background:rgba(255,255,255,.05);border:1px solid rgba(184,94,255,.18);border-radius:8px;padding:1.75rem;transition:.2s;}
+.valor-card:hover{border-color:var(--neon);background:rgba(184,94,255,.08);}
+.valor-card h4{font-family:var(--font-head);font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
+.valor-card p{font-size:.8rem;color:var(--gray-mid);line-height:1.6;}
+.team-section{padding:5rem 8%;}
+.dep-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem;}
+.dep-card{background:var(--off-white);border-radius:8px;padding:2rem;border-left:4px solid var(--neon);}
+.dep-text{font-size:.92rem;font-style:italic;line-height:1.75;margin-bottom:1.25rem;}
+.dep-author{display:flex;align-items:center;gap:.75rem;}
+.dep-avatar{width:40px;height:40px;border-radius:50%;background:var(--neon);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;color:#fff;}
+.dep-name{font-family:var(--font-head);font-size:.85rem;font-weight:700;}
+.dep-role{font-size:.75rem;color:var(--gray-dark);}
+.dep-tags{display:flex;gap:.35rem;margin-top:.4rem;flex-wrap:wrap;}
+.dep-tag{font-size:.62rem;font-weight:600;background:rgba(184,94,255,.1);color:var(--neon);padding:.18rem .55rem;border-radius:50px;}
+
+.tec-page{padding:0;}
+.tec-hero{background:var(--black);padding:6rem 8%;text-align:center;}
+/* GATILHO 1 — abertura tecnologia */
+.tec-gatilho{font-family:var(--font-head);font-size:clamp(1rem,2.2vw,1.35rem);font-weight:600;color:rgba(255,255,255,.65);max-width:640px;margin:0 auto 3rem;line-height:1.6;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.tec-gatilho em{color:var(--neon);font-style:normal;}
+.tec-hero .sec-title{color:var(--white);font-size:clamp(2.2rem,4vw,3.5rem);}
+.tec-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+.tec-stat{background:rgba(255,255,255,.05);border:1px solid rgba(184,94,255,.2);border-radius:8px;padding:2rem;text-align:center;}
+.tec-stat-n{font-family:var(--font-head);font-size:2.8rem;font-weight:700;color:var(--neon);line-height:1;}
+.tec-stat-l{font-size:.8rem;color:var(--gray-mid);margin-top:.4rem;line-height:1.45;}
+.tec-benefits{padding:5rem 8%;}
+.tec-ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.tec-ben{background:var(--off-white);border-radius:8px;padding:2rem;transition:.2s;}
+.tec-ben:hover{box-shadow:0 8px 30px rgba(184,94,255,.12);}
+.tec-ben-icon{font-size:2rem;margin-bottom:.75rem;}
+.tec-ben h3{font-family:var(--font-head);font-size:.95rem;font-weight:700;margin-bottom:.45rem;}
+.tec-ben p{font-size:.83rem;color:var(--gray-dark);line-height:1.65;}
+/* GATILHO 4 — bloco fibra */
+.tec-fiber-note{background:rgba(184,94,255,.08);border:1px solid rgba(184,94,255,.28);border-radius:10px;padding:1.5rem 1.75rem;margin:2.5rem 8% 0;}
+.tec-fiber-note p{font-family:var(--font-head);font-size:.9rem;font-weight:500;color:var(--gray-dark);line-height:1.7;}
+.tec-fiber-note strong{color:var(--purple);}
+.tec-compare{padding:3rem 8% 5rem;background:var(--off-white);}
+.tec-table{width:100%;border-collapse:collapse;margin-top:2rem;}
+.tec-table th,.tec-table td{padding:.8rem 1.1rem;text-align:center;font-size:.82rem;border-bottom:1px solid rgba(0,0,0,.06);}
+.tec-table th{font-family:var(--font-head);font-weight:700;color:var(--neon);background:rgba(184,94,255,.06);}
+.tec-table td.yes{color:#22c55e;font-weight:700;}
+.tec-table td.no{color:#ef4444;}
+.tec-care{padding:4rem 8%;background:var(--black);}
+.tec-care .sec-title{color:var(--white);}
+.care-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem;}
+.care-item{background:rgba(255,255,255,.04);border:1px solid rgba(184,94,255,.15);border-radius:7px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+.care-item p{font-size:.82rem;color:var(--gray-mid);line-height:1.55;}
+
+.contato-page{padding:3rem 8% 5rem;}
+.contato-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;margin-top:3rem;}
+.channel{background:var(--off-white);border:1.5px solid var(--gray-light);border-radius:8px;padding:1.4rem;display:flex;gap:1rem;align-items:center;text-decoration:none;color:inherit;transition:.2s;margin-bottom:.85rem;}
+.channel:hover{border-color:var(--neon);}
+.ch-icon{font-size:1.65rem;}
+.ch-title{font-family:var(--font-head);font-size:.88rem;font-weight:700;}
+.ch-info{font-size:.78rem;color:var(--gray-dark);}
+.contact-form{display:flex;flex-direction:column;gap:1rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cfg{display:flex;flex-direction:column;gap:.4rem;}
+.cfg label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dark);}
+.cfg input,.cfg textarea,.cfg select{background:var(--off-white);border:1.5px solid var(--gray-light);border-radius:5px;padding:.7rem 1rem;font-family:var(--font-body);font-size:.88rem;color:var(--black);outline:none;transition:.2s;}
+.cfg input:focus,.cfg textarea:focus,.cfg select:focus{border-color:var(--neon);background:#fff;}
+.cfg textarea{resize:vertical;min-height:110px;}
+.btn-submit{background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.88rem;font-weight:700;padding:.9rem 2rem;border:none;border-radius:5px;cursor:pointer;letter-spacing:.04em;transition:.2s;width:100%;}
+.btn-submit:hover{background:var(--purple);}
+
+.faq-page{padding:3rem 8% 5rem;background:var(--off-white);}
+.faq-list{max-width:760px;margin-top:2.5rem;}
+.faq-item{border-bottom:1px solid rgba(0,0,0,.07);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;cursor:pointer;font-family:var(--font-head);font-size:.92rem;font-weight:600;text-align:left;gap:1rem;}
+.faq-ico{color:var(--neon);font-size:1.25rem;flex-shrink:0;transition:.3s;}
+.faq-item.open .faq-ico{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-a p{font-size:.88rem;line-height:1.72;color:var(--gray-dark);padding-bottom:1.1rem;}
+
+footer{background:var(--black);padding:4rem 8% 2rem;border-top:1px solid rgba(184,94,255,.2);}
+.ft{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.ft-logo{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--white);}
+.ft-logo .w{color:var(--neon);}
+.ft-tagline{font-size:.82rem;color:var(--gray-mid);line-height:1.5;margin-bottom:.25rem;}
+.ft-slogan{font-size:.78rem;color:rgba(255,255,255,.3);line-height:1.5;font-style:italic;margin-bottom:1rem;}
+.ft-col h5{font-family:var(--font-head);font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--white);margin-bottom:.9rem;}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+.ft-col ul li a{font-size:.78rem;color:var(--gray-mid);text-decoration:none;transition:.2s;cursor:pointer;}
+.ft-col ul li a:hover{color:var(--neon);}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;}
+.ft-copy{font-size:.72rem;color:var(--gray-mid);}
+.ft-copy span{color:var(--neon);}
+.ft-cnpj{font-size:.67rem;color:rgba(255,255,255,.2);}
+
+@media(max-width:1000px){.hero{grid-template-columns:1fr;}.hero-visual{min-height:55vw;}.featured-grid{grid-template-columns:repeat(2,1fr);}.mascot-inner{grid-template-columns:1fr;}.sobre-hero{grid-template-columns:1fr;}.pers-grid{grid-template-columns:1fr;}.contato-inner{grid-template-columns:1fr;}.tec-stats{grid-template-columns:repeat(2,1fr);}.missao-grid{grid-template-columns:1fr;}.valores-grid{grid-template-columns:1fr 1fr;}.col-hero{grid-template-columns:1fr;}.ft{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.stats-strip{grid-template-columns:repeat(2,1fr);}.vote-grid{grid-template-columns:1fr;}.tec-ben-grid{grid-template-columns:1fr;}.care-grid{grid-template-columns:1fr;}.dep-grid{grid-template-columns:1fr;}.font-options{grid-template-columns:repeat(2,1fr);}.form-row2{grid-template-columns:1fr;}.frow{grid-template-columns:1fr;}.ft{grid-template-columns:1fr;}}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <span>&gt; StratGeek</span><span class="nl-w">.Wear</span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-personalizar" href="#" onclick="showPage('personalizar')">✏ Personalizar</a>
+      <a class="nav-cta" href="https://www.stratgeekwear.com.br" target="_blank">Loja →</a>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')">Início</a></li>
+      <li><a href="#" onclick="showPage('colecoes')">Coleções</a></li>
+      <li><a href="#" onclick="showPage('sobre')">Sobre</a></li>
+      <li><a href="#" onclick="showPage('tecnologia')">Tecnologia</a></li>
+      <li><a href="#" onclick="showPage('contato')">Contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-text reveal">
+      <p class="hero-drop">Drop 1 — Mede e Entrega</p>
+      <h1>Você não veste<br>uma camiseta.<br>Você veste sua <em>estratégia.</em></h1>
+      <!-- GATILHO 5 -->
+      <p class="hero-differentiator">Você já tem camisetas confortáveis.<br>Essa aqui também é confortável — e ainda fala por você.</p>
+      <p class="hero-sub">Modal premium. Frases que provocam. Uma comunidade de mentes estratégicas que pensam rápido, entregam resultado — e vestem sua identidade.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#" onclick="showPage('colecoes')">Ver Coleção →</a>
+        <a class="btn-outline" href="#" onclick="showPage('sobre')">Conheça a Marca</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img class="hero-mascot" id="hero-mascot-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'%3E%3Crect width='400' height='500' fill='%230A0A0A'/%3E%3Ctext x='200' y='260' text-anchor='middle' font-size='14' fill='%23B85EFF' font-family='sans-serif'%3E[imagem do mascote]%3C/text%3E%3C/svg%3E" alt="Mascote StratGeek.Wear"/>
+      <div class="hero-badge">NOVO DROP ↗</div>
+    </div>
+  </div>
+
+  <!-- GATILHO — faixa após hero -->
+  <div class="differentiator-strip">
+    <blockquote>Existem camisetas feitas para esconder o suor.<br><em>A nossa foi feita para mostrar quem você é.</em></blockquote>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="hl">Strat Mode</span><span>modal premium</span><span class="hl">OKR</span><span>deploy</span><span class="hl">data-driven</span><span>sprint</span><span class="hl">neurociência</span><span>performance</span><span class="hl">estratégia</span><span>código limpo</span>
+      <span class="hl">Strat Mode</span><span>modal premium</span><span class="hl">OKR</span><span>deploy</span><span class="hl">data-driven</span><span>sprint</span><span class="hl">neurociência</span><span>performance</span><span class="hl">estratégia</span><span>código limpo</span>
+    </div>
+  </div>
+
+  <div class="benefits-bar">
+    <div class="bitem">Tecido modal premium</div>
+    <div class="bitem">Troca grátis para defeito de fabricação</div>
+    <div class="bitem">7 dias para devolução (somente defeitos de fabricação)</div>
+    <div class="bitem" style="color:var(--neon);font-weight:700;">⚡ 10% off pagamento com PIX — qualquer compra</div>
+    <div class="bitem">Parcele em até 12x no cartão</div>
+  </div>
+
+  <!-- PROMOÇÃO DE LANÇAMENTO — nova estrutura com tiers -->
+  <section style="background:linear-gradient(135deg,var(--black) 0%,#1a0a2e 50%,var(--black) 100%);padding:3.5rem 8%;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(184,94,255,.18) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;top:1rem;right:2rem;font-family:var(--font-mono);font-size:.65rem;color:rgba(184,94,255,.4);letter-spacing:.1em;">// PROMOÇÃO DE LANÇAMENTO</div>
+    <div style="position:relative;z-index:2;">
+      <span style="font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--neon);display:block;margin-bottom:.75rem;">⚡ Oferta de Lançamento — 7 dias apenas</span>
+      <h2 style="font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.5rem);font-weight:700;color:var(--white);letter-spacing:-.02em;line-height:1.2;margin-bottom:2rem;">Seja um dos primeiros. Pague menos. <span style="color:var(--neon);">Vista mais.</span></h2>
+
+      <!-- TIERS -->
+      <div style="background:rgba(184,94,255,.08);border:1px solid rgba(184,94,255,.25);border-radius:8px;padding:.75rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+        <span style="font-family:var(--font-mono);font-size:.65rem;color:var(--neon);letter-spacing:.1em;text-transform:uppercase;">💡 Como funciona:</span>
+        <span style="font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.5;">Débito ou crédito à vista: <strong style="color:var(--white);">R$119,90</strong> por camiseta, sem acréscimos. <strong style="color:var(--neon);">Pagamento com PIX</strong>: preço promocional de lançamento com desconto exclusivo. <span style="color:rgba(255,255,255,.4);font-size:.88em;">Parcelado: consulte as taxas da operadora no checkout.</span></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.25rem;">
+
+        <!-- KIT 1 -->
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.5rem;text-align:center;">
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.25rem;">Kit 1</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:.85rem;">1 camiseta</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.75rem;">Débito ou crédito à vista: <strong style="color:var(--white);">R$119,90</strong></div>
+          <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:.85rem;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:var(--neon);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;">pagamento com PIX</div>
+            <div style="font-family:var(--font-head);font-size:2.4rem;font-weight:700;color:var(--neon);line-height:1;">R$109,90</div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.25rem;">cada camiseta</div>
+          </div>
+          <div style="margin-top:.85rem;font-size:.62rem;color:rgba(255,255,255,.25);">Parcelado: consulte as taxas no checkout</div>
+        </div>
+
+        <!-- KIT 2 -->
+        <div style="background:rgba(184,94,255,.1);border:2px solid var(--neon);border-radius:10px;padding:1.5rem;text-align:center;">
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--neon);margin-bottom:.15rem;">Kit 2</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:.25rem;">2 camisetas</div>
+          <div style="font-family:var(--font-mono);font-size:.58rem;color:var(--neon);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.65rem;">⚡ mais escolhido</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.75rem;">Débito ou crédito à vista: <strong style="color:var(--white);">R$119,90</strong></div>
+          <div style="border-top:1px solid rgba(184,94,255,.2);padding-top:.85rem;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:var(--neon);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;">pagamento com PIX</div>
+            <div style="font-family:var(--font-head);font-size:2.4rem;font-weight:700;color:var(--neon);line-height:1;">R$99,90</div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.25rem;">cada camiseta</div>
+          </div>
+          <div style="margin-top:.85rem;font-size:.62rem;color:rgba(255,255,255,.25);">Parcelado: consulte as taxas no checkout</div>
+        </div>
+
+        <!-- KIT 3 -->
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.5rem;text-align:center;">
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.25rem;">Kit 3</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:.85rem;">3 camisetas</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.75rem;">Débito ou crédito à vista: <strong style="color:var(--white);">R$119,90</strong></div>
+          <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:.85rem;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:var(--neon);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;">pagamento com PIX</div>
+            <div style="font-family:var(--font-head);font-size:2.4rem;font-weight:700;color:var(--neon);line-height:1;">R$89,90</div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.25rem;">cada camiseta</div>
+          </div>
+          <div style="margin-top:.85rem;font-size:.62rem;color:rgba(255,255,255,.25);">Parcelado: consulte as taxas no checkout</div>
+        </div>
+
+      </div>
+      <!-- GATILHO PIX -->
+      <div style="background:linear-gradient(135deg,rgba(184,94,255,.15),rgba(106,13,173,.1));border:1.5px solid var(--neon);border-radius:8px;padding:.85rem 1.25rem;margin-bottom:2rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+        <span style="font-size:1.1rem;">⚡</span>
+        <span style="font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--white);">Escolha PIX e leve pelo menor preço. Sempre.</span>
+        <span style="font-size:.78rem;color:rgba(255,255,255,.5);">Outras formas: débito e crédito · à vista sem acréscimos · parcelado: consulte as taxas da operadora no checkout.</span>
+      </div>
+
+      <!-- STOCK + COUNTDOWN -->
+      <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.75rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:rgba(255,255,255,.4);">
+          <div style="width:160px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;"><div style="height:100%;background:var(--neon);border-radius:2px;width:68%;"></div></div>
+          Restam poucas unidades neste preço
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.68rem;color:var(--gray-mid);font-weight:600;letter-spacing:.1em;text-transform:uppercase;">encerra em</span>
+          <div style="display:flex;gap:.35rem;" id="countdown">
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(184,94,255,.3);border-radius:5px;padding:.5rem .7rem;min-width:48px;text-align:center;"><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--white);line-height:1;" id="cd-days">--</div><div style="font-size:.55rem;color:var(--gray-mid);letter-spacing:.08em;">DIAS</div></div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(184,94,255,.3);border-radius:5px;padding:.5rem .7rem;min-width:48px;text-align:center;"><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--white);line-height:1;" id="cd-hours">--</div><div style="font-size:.55rem;color:var(--gray-mid);letter-spacing:.08em;">HORAS</div></div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(184,94,255,.3);border-radius:5px;padding:.5rem .7rem;min-width:48px;text-align:center;"><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--neon);line-height:1;" id="cd-mins">--</div><div style="font-size:.55rem;color:var(--gray-mid);letter-spacing:.08em;">MIN</div></div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(184,94,255,.3);border-radius:5px;padding:.5rem .7rem;min-width:48px;text-align:center;"><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--neon);line-height:1;" id="cd-secs">--</div><div style="font-size:.55rem;color:var(--gray-mid);letter-spacing:.08em;">SEG</div></div>
+          </div>
+        </div>
+      </div>
+
+      <a class="btn-primary" href="#" onclick="showPage('colecoes')">Garantir meu kit agora →</a>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="feat-header reveal">
+      <div>
+        <span class="section-label">Linha Strat Mode — Camisetas com Frases Estratégicas</span>
+        <h2 class="sec-title">Produtos em <em>destaque.</em></h2>
+      </div>
+      <a class="see-all" href="#" onclick="showPage('colecoes')">Ver todos →</a>
+    </div>
+    <!-- GATILHO 2 -->
+    <div class="products-differentiator reveal">
+      <p>Modal premium + <em>identidade</em>. Porque conforto sem propósito é só tecido.</p>
+    </div>
+    <div class="featured-grid" id="home-featured"></div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stat reveal"><div class="stat-n">20<sup style="font-size:1.5rem">x</sup></div><p class="stat-l">menos água que o algodão no processo produtivo</p></div>
+    <div class="stat reveal"><div class="stat-n">50<sup style="font-size:1.5rem">%</sup></div><p class="stat-l">menos emissão de carbono vs tecidos convencionais</p></div>
+    <div class="stat reveal"><div class="stat-n">0</div><p class="stat-l">necessidade de ferro após a lavagem</p></div>
+    <div class="stat reveal"><div class="stat-n">100<sup style="font-size:1.5rem">%</sup></div><p class="stat-l">modal premium — fibra natural biodegradável</p></div>
+  </div>
+
+  <section class="mascot-section">
+    <div class="mascot-inner">
+      <div class="mascot-img-wrap reveal">
+        <img id="mascot-section-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%230A0A0A' rx='12'/%3E%3Ctext x='300' y='210' text-anchor='middle' font-size='13' fill='%23666' font-family='sans-serif'%3E[imagem do mascote]%3C/text%3E%3C/svg%3E" alt="Mascote" style="width:100%;border-radius:12px;"/>
+        <div class="mascot-glow"></div>
+      </div>
+      <div class="reveal">
+        <span class="section-label">Edição Especial de Lançamento</span>
+        <h2 class="sec-title">Ele não é só um mascote.<br>Ele é <em>um de vocês.</em></h2>
+        <p style="font-size:.95rem;line-height:1.8;color:var(--gray-dark);margin-bottom:1rem;">Robô. Estrategista. Olhos neon. Mente em modo performance 24h.</p>
+        <p style="font-size:.95rem;line-height:1.8;color:var(--gray-dark);margin-bottom:1rem;">Ele nasceu dentro da StratGeek.Wear para representar exatamente quem usa nossas peças — quem pensa rápido, entrega resultado e não aceita o piloto automático.</p>
+        <p style="font-size:.95rem;line-height:1.8;color:var(--gray-dark);margin-bottom:1.75rem;">A Edição Mascote é uma coleção exclusiva de lançamento. <strong>Poucas unidades. Sem reposição.</strong> Quem garante agora carrega no peito a identidade da marca desde o primeiro drop.</p>
+        <div style="background:rgba(184,94,255,.07);border:1.5px solid rgba(184,94,255,.25);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.75rem;display:flex;align-items:center;gap:.75rem;">
+          <span style="font-size:1.2rem;">⚡</span>
+          <p style="font-size:.85rem;font-weight:600;color:var(--purple);line-height:1.5;">Peças exclusivas de lançamento — sem reposição após esgotamento.</p>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a class="btn-primary" href="#" onclick="showPage('colecoes')">Garantir minha peça →</a>
+          <a class="btn-outline" href="#" onclick="document.getElementById('vote-anchor').scrollIntoView({behavior:'smooth'})">Votar no nome dele</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vote-section" id="vote-anchor">
+    <span class="section-label">Edição Especial de Lançamento</span>
+    <h2 class="sec-title" style="color:var(--white);">Batize nosso <em>mascote.</em></h2>
+    <p class="sec-sub" style="color:var(--gray-mid);">Três finalistas. Você decide o nome que fica para sempre. Vote e faça parte da história da StratGeek.Wear.</p>
+    <div style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.3);border-radius:6px;padding:.55rem 1.1rem;margin-bottom:2rem;">
+      <span style="width:7px;height:7px;border-radius:50%;background:var(--neon);display:inline-block;animation:pulse 1.5s infinite;"></span>
+      <span style="font-family:var(--font-mono);font-size:.72rem;color:var(--neon);" id="vote-countdown">Carregando...</span>
+    </div>
+    <div class="vote-grid" id="vote-grid"></div>
+    <div class="vote-btn-wrap">
+      <button class="btn-primary" onclick="submitVote()">Confirmar meu voto →</button>
+      <button class="btn-outline" style="border-color:var(--gray-mid);color:var(--gray-mid);" onclick="showPage('colecoes')">Ver coleção do mascote</button>
+    </div>
+    <p class="vote-result-msg" id="vote-msg"></p>
+  </section>
+
+  <section style="padding:5rem 8%;background:var(--neon);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;" class="reveal">
+    <div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem;">Sua frase. Sua <span style="color:var(--black);">identidade.</span></h2>
+      <p style="color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.65;">Crie uma camiseta com a frase que só você pensa. Escolha a fonte. Visualize antes de pedir.</p>
+    </div>
+    <a class="btn-outline" style="border-color:#fff;color:#fff;white-space:nowrap;" href="#" onclick="showPage('personalizar')">Criar agora →</a>
+  </section>
+
+  <footer id="main-footer"></footer>
+</div>
+
+<!-- COLEÇÕES -->
+<div class="page" id="page-colecoes">
+  <div class="colecoes-page">
+    <!-- COL HERO -->
+    <div style="position:relative;overflow:hidden;margin-bottom:3.5rem;min-height:480px;display:flex;align-items:stretch;">
+      <!-- fundo com grade tech -->
+      <div style="position:absolute;inset:0;background:var(--black);z-index:0;"></div>
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(184,94,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(184,94,255,.06) 1px,transparent 1px);background-size:40px 40px;z-index:1;"></div>
+      <div style="position:absolute;top:-80px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(184,94,255,.22) 0%,transparent 65%);z-index:1;pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-60px;left:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(106,13,173,.18) 0%,transparent 65%);z-index:1;pointer-events:none;"></div>
+
+      <!-- conteúdo -->
+      <div style="position:relative;z-index:2;padding:4rem 8%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%;">
+
+        <!-- esquerda -->
+        <div class="reveal">
+          <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(184,94,255,.15);border:1px solid rgba(184,94,255,.4);border-radius:4px;padding:.35rem .85rem;margin-bottom:1.5rem;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--neon);display:inline-block;animation:pulse 1.5s infinite;"></span>
+            <span style="font-family:var(--font-mono);font-size:.65rem;font-weight:700;color:var(--neon);letter-spacing:.14em;text-transform:uppercase;">Drop 1 — ao vivo agora</span>
+          </div>
+          <h1 style="font-family:var(--font-head);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.05;margin-bottom:1.5rem;">Cada peça<br>tem uma <span style="color:var(--neon);">frase.</span><br>A sua tem <span style="color:var(--white);-webkit-text-stroke:1px rgba(184,94,255,.6);">um dono.</span></h1>
+          <p style="font-size:.95rem;color:rgba(255,255,255,.55);line-height:1.8;max-width:440px;margin-bottom:2rem;">Modal 95% + elastano 5%. Não amassa, não desbota, não retém odor. Feita para quem não aceita ser genérico — nem na roupa, nem no resultado.</p>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.25rem;">
+            <span style="font-size:.72rem;font-weight:600;color:var(--neon);background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.2);padding:.3rem .75rem;border-radius:3px;">Não precisa passar</span>
+            <span style="font-size:.72rem;font-weight:600;color:var(--neon);background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.2);padding:.3rem .75rem;border-radius:3px;">Antiodor natural</span>
+            <span style="font-size:.72rem;font-weight:600;color:var(--neon);background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.2);padding:.3rem .75rem;border-radius:3px;">Seca rápido</span>
+            <span style="font-size:.72rem;font-weight:600;color:var(--neon);background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.2);padding:.3rem .75rem;border-radius:3px;">Não desbota</span>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+            <div style="background:var(--neon);border-radius:5px;padding:.9rem 1.6rem;cursor:pointer;" onclick="document.getElementById('col-grid').scrollIntoView({behavior:'smooth'})">
+              <span style="font-family:var(--font-head);font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.04em;">Ver coleção completa →</span>
+            </div>
+            <div style="text-align:left;">
+              <div style="font-family:var(--font-head);font-size:.7rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.15rem;">Promoção de lançamento</div>
+              <div style="font-family:var(--font-head);font-size:.82rem;font-weight:600;color:var(--white);">Kit 2 — <span style="color:var(--neon);">R$99,90 cada</span> · Kit 3 — <span style="color:var(--neon);">R$89,90 cada</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- direita — frases em destaque -->
+        <div class="reveal" style="display:flex;flex-direction:column;gap:.85rem;">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(184,94,255,.2);border-left:3px solid var(--neon);border-radius:6px;padding:1.1rem 1.4rem;transition:.2s;cursor:default;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:rgba(184,94,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem;">strat mode</div>
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--white);line-height:1.3;">"Menos ego, mais insight."</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(184,94,255,.2);border-left:3px solid var(--neon);border-radius:6px;padding:1.1rem 1.4rem;transition:.2s;cursor:default;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:rgba(184,94,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem;">strat mode</div>
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--white);line-height:1.3;">"Onde o ego cala, o propósito fala."</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(184,94,255,.2);border-left:3px solid var(--neon);border-radius:6px;padding:1.1rem 1.4rem;transition:.2s;cursor:default;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:rgba(184,94,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem;">strat mode</div>
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--white);line-height:1.3;">"Código limpo, mente suja."</div>
+          </div>
+          <div style="background:rgba(184,94,255,.08);border:1px solid rgba(184,94,255,.35);border-radius:6px;padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:var(--font-head);font-size:.8rem;color:rgba(255,255,255,.5);">+ mais frases na coleção</span>
+            <span style="color:var(--neon);font-size:.85rem;">↓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+    @media(max-width:1000px){
+      .col-hero-inner{grid-template-columns:1fr !important;}
+    }
+    </style>
+
+
+    <div id="col-sections"></div>
+    <div class="size-guide reveal">
+      <h3>📐 Guia de Tamanhos</h3>
+      <table class="size-table">
+        <thead><tr><th>Tamanho</th><th>Largura (cm)</th><th>Comprimento (cm)</th><th>Manga (cm)</th></tr></thead>
+        <tbody>
+          <tr><td>P</td><td>48</td><td>68</td><td>20</td></tr>
+          <tr><td>M</td><td>52</td><td>71</td><td>21</td></tr>
+          <tr><td>G</td><td>56</td><td>74</td><td>22</td></tr>
+          <tr><td>GG</td><td>60</td><td>77</td><td>23</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.78rem;color:var(--gray-dark);margin-top:.75rem;">💡 Se você está entre dois tamanhos, opte pelo maior para um fit mais confortável. Nossa tecnologia premium mantém a forma mesmo após várias lavagens.</p>
+    </div>
+  </div>
+  <footer id="col-footer"></footer>
+</div>
+
+<!-- PERSONALIZAR -->
+<div class="page" id="page-personalizar">
+  <div class="personalizar-page">
+    <div class="pers-hero">
+      <span class="section-label">Custom Lab</span>
+      <h2 class="sec-title">Sua frase. Sua <em>camiseta.</em></h2>
+      <p class="sec-sub" style="margin:0 auto;">Escolha a frase, a fonte e o produto. Veja o preview em tempo real e finalize o pedido por e-mail de confirmação.</p>
+    </div>
+    <div class="pers-grid">
+      <div class="pers-form">
+        <div>
+          <p class="form-section-title">1. Produto</p>
+          <div class="fg">
+            <label>Tipo de produto</label>
+            <select id="pers-type" onchange="updatePreview()">
+              <option value="camiseta_preta">Camiseta Preta — Modal Premium</option>
+              <option value="caneca">Caneca Personalizada</option>
+              <option value="ecobag">Ecobag Personalizada</option>
+            </select>
+          </div>
+          <div class="fg" style="margin-top:.75rem;">
+            <label>Cor</label>
+            <select id="pers-cor" onchange="updatePreview()">
+              <option value="preta">Preta — disponível</option>
+            </select>
+          </div>
+          <div class="fg" style="margin-top:.75rem;">
+            <label>Tamanho (camisetas)</label>
+            <select id="pers-size" onchange="updatePreview()">
+              <option>P</option><option selected>M</option><option>G</option><option>GG</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <p class="form-section-title">2. Sua Frase</p>
+          <div class="fg">
+            <label>Frase para estampa</label>
+            <textarea id="pers-frase" rows="3" placeholder="Ex: Deploy em produção às 17h59." oninput="updatePreview()"></textarea>
+            <span style="font-size:.7rem;color:var(--gray-mid);">Máximo 60 caracteres recomendados.</span>
+          </div>
+        </div>
+        <div>
+          <p class="form-section-title">3. Escolha a Fonte</p>
+          <div class="font-options" id="font-opts">
+            <div class="font-opt font-space-grotesk selected" onclick="selectFont('Space Grotesk',this)"><div class="fprev">Aa</div><div class="fname">Space Grotesk</div></div>
+            <div class="font-opt font-ibm" onclick="selectFont('IBM Plex Sans',this)"><div class="fprev">Aa</div><div class="fname">IBM Plex Sans</div></div>
+            <div class="font-opt font-mono" onclick="selectFont('Space Mono',this)"><div class="fprev">Aa</div><div class="fname">Space Mono</div></div>
+            <div class="font-opt font-orb" onclick="selectFont('Orbitron',this)"><div class="fprev">Aa</div><div class="fname">Orbitron</div></div>
+          </div>
+        </div>
+        <div>
+          <p class="form-section-title">4. Seus Dados</p>
+          <div class="form-row2">
+            <div class="fg"><label>Nome completo</label><input type="text" id="pers-nome" placeholder="Seu nome"/></div>
+            <div class="fg"><label>E-mail</label><input type="email" id="pers-email" placeholder="seu@email.com"/></div>
+          </div>
+          <div class="fg" style="margin-top:1rem;"><label>Observações (opcional)</label><input type="text" id="pers-obs" placeholder="Ex: acabamento fosco, entrega urgente..."/></div>
+        </div>
+        <!-- CHECKBOX OBRIGATÓRIO -->
+        <div style="background:var(--off-white);border:1.5px solid rgba(184,94,255,.25);border-radius:8px;padding:1.1rem 1.25rem;">
+          <label style="display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;">
+            <input type="checkbox" id="pers-confirm" style="margin-top:.2rem;accent-color:var(--neon);width:16px;height:16px;flex-shrink:0;"/>
+            <span style="font-size:.8rem;color:var(--gray-dark);line-height:1.6;">Confirmo que revisei minha frase, cor e fonte. <strong style="color:var(--black);">Estou ciente de que após a confirmação do pedido, o item entra imediatamente em produção e não poderá ser alterado.</strong> Em caso de erro identificado após a compra, devo entrar em contato imediatamente pelo e-mail <strong>contato@stratgeekwear.com.br</strong>.</span>
+          </label>
+        </div>
+
+        <button class="btn-primary" onclick="submitPersonalizacao()" style="width:100%;">Confirmar e solicitar personalização →</button>
+
+        <!-- PROCESSO DE FABRICAÇÃO -->
+        <div style="border-top:1px solid var(--gray-light);padding-top:1.25rem;display:flex;flex-direction:column;gap:.75rem;">
+          <p style="font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--black);">Como funciona o processo</p>
+          <div style="display:flex;gap:.6rem;align-items:flex-start;">
+            <span style="background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:3px;flex-shrink:0;margin-top:.1rem;">01</span>
+            <span style="font-size:.78rem;color:var(--gray-dark);line-height:1.5;">Você preenche os dados, confirma a personalização e conclui o pagamento.</span>
+          </div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start;">
+            <span style="background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:3px;flex-shrink:0;margin-top:.1rem;">02</span>
+            <span style="font-size:.78rem;color:var(--gray-dark);line-height:1.5;">Você recebe um e-mail automático confirmando exatamente o que foi solicitado — frase, fonte, cor e tamanho.</span>
+          </div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start;">
+            <span style="background:var(--neon);color:#fff;font-family:var(--font-head);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:3px;flex-shrink:0;margin-top:.1rem;">03</span>
+            <span style="font-size:.78rem;color:var(--gray-dark);line-height:1.5;">O pedido entra imediatamente em produção. A responsabilidade pelas informações fornecidas é do cliente.</span>
+          </div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start;">
+            <span style="background:rgba(184,94,255,.15);color:var(--purple);font-family:var(--font-head);font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:3px;flex-shrink:0;margin-top:.1rem;">⚠</span>
+            <span style="font-size:.78rem;color:var(--gray-dark);line-height:1.5;">Identificou algum erro após a compra? Envie um e-mail <strong>imediatamente</strong> para <strong style="color:var(--purple);">contato@stratgeekwear.com.br</strong> com o número do pedido. Faremos o possível para corrigir antes da produção definitiva.</span>
+          </div>
+        </div>
+      </div>
+      <div class="pers-preview">
+        <div class="preview-box">
+          <div class="preview-shirt">
+            <div class="preview-shirt-shape" id="preview-shape">
+              <div class="preview-phrase" id="preview-phrase">Sua frase aqui.</div>
+              <div class="preview-logo-line">&gt; StratGeek<span>.Wear</span></div>
+            </div>
+          </div>
+          <div class="preview-meta">
+            <p><strong id="prev-produto">Camiseta Preta — Modal Premium</strong></p>
+            <p>Fonte: <strong id="prev-fonte">Space Grotesk</strong></p>
+            <p>Cor: <strong>Preta</strong> · Tamanho: <strong id="prev-tamanho">M</strong></p>
+            <p style="margin-top:.5rem;">PIX: <strong style="color:var(--neon);" id="prev-pix">R$ 139,90</strong> · Cartão (à vista): <strong id="prev-preco">R$ 149,90</strong></p>
+          </div>
+        </div>
+        <p style="font-size:.72rem;color:var(--gray-mid);text-align:center;margin-top:.75rem;">Preview ilustrativo. A frase, cor e fonte exibidas acima são exatamente o que será produzido.</p>
+      </div>
+    </div>
+  </div>
+  <footer id="pers-footer"></footer>
+</div>
+
+<!-- SOBRE -->
+<div class="page" id="page-sobre">
+  <div class="sobre-page">
+    <div class="sobre-hero" style="position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:stretch;">
+      <!-- fundo tech grid -->
+      <div style="position:absolute;inset:0;background:var(--black);z-index:0;"></div>
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(184,94,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(184,94,255,.05) 1px,transparent 1px);background-size:44px 44px;z-index:1;"></div>
+      <div style="position:absolute;top:-100px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(106,13,173,.2) 0%,transparent 65%);z-index:1;pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-80px;right:5%;width:400px;height:400px;background:radial-gradient(circle,rgba(184,94,255,.15) 0%,transparent 65%);z-index:1;pointer-events:none;"></div>
+
+      <div style="position:relative;z-index:2;padding:7rem 8%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;width:100%;">
+
+        <!-- esquerda -->
+        <div class="reveal">
+          <div style="font-family:var(--font-mono);font-size:.65rem;color:rgba(184,94,255,.7);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.5rem;">// quem somos</div>
+
+          <h2 style="font-family:var(--font-head);font-size:clamp(2.2rem,4vw,3.6rem);font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.08;margin-bottom:2rem;">Nós somos<br><span style="color:var(--neon);">um de vocês.</span></h2>
+
+          <p style="font-size:1rem;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:1.25rem;">Desenvolvemos. Lideramos. Gerimos. Estrategizamos. Estudamos até de madrugada porque aprender é um vício que não queremos largar.</p>
+
+          <p style="font-size:1rem;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:1.25rem;">Sabemos onde o calo aperta. Sabemos o que é reunião que deveria ser e-mail, deploy na sexta às 17h e meta que muda no meio do sprint. Sabemos o que é entregar resultado com autonomia, criatividade e uma dose generosa de ironia para aguentar o processo.</p>
+
+          <p style="font-size:1rem;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:2.5rem;">A StratGeek.Wear nasceu disso. Não de uma agência de moda. De gente que vive o mesmo ritmo que você — e que um dia decidiu que a roupa também podia comunicar o que a gente pensa, entrega e valoriza.</p>
+
+          <!-- tribos -->
+          <div style="margin-bottom:2.5rem;">
+            <div style="font-family:var(--font-mono);font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.85rem;">// você se reconhece aqui?</div>
+            <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Desenvolvedor</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Product Manager</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Líder de Time</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Estrategista</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Gestor</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">UX Designer</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Empreendedor</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Analista</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1px solid rgba(184,94,255,.35);color:rgba(255,255,255,.7);">Nerd</span>
+              <span style="font-family:var(--font-head);font-size:.75rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;border:1.5px solid var(--neon);color:var(--neon);background:rgba(184,94,255,.08);">+ qualquer um que entrega.</span>
+            </div>
+          </div>
+
+          <blockquote style="border-left:3px solid var(--neon);padding-left:1.1rem;font-family:var(--font-head);font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;font-style:normal;">"Porque quem mede resultados<br>também quer vestir eficiência."</blockquote>
+        </div>
+
+        <!-- direita -->
+        <div class="reveal" style="display:flex;flex-direction:column;gap:1.25rem;">
+          <img id="sobre-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Crect width='500' height='500' fill='%23111' rx='12'/%3E%3Ctext x='250' y='260' text-anchor='middle' font-size='13' fill='%23666' font-family='sans-serif'%3E[imagem do mascote]%3C/text%3E%3C/svg%3E" alt="mascote" style="width:100%;border-radius:12px;"/>
+
+
+        </div>
+
+      </div>
+    </div>
+    <!-- ORIGEM DA MARCA -->
+    <div style="padding:6rem 8%;background:var(--white);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--neon),var(--purple));"></div>
+
+      <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start;">
+
+        <!-- esquerda — label + pull quote -->
+        <div class="reveal">
+          <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--neon);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.25rem;">// por que a StratGeek.Wear existe</div>
+          <h2 style="font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin-bottom:2rem;">Não nasceu de<br>uma agência de moda.<br><span style="color:var(--neon);">Nasceu de uma<br>segunda-feira de manhã.</span></h2>
+
+          <div style="background:var(--off-white);border-left:4px solid var(--neon);border-radius:0 8px 8px 0;padding:1.5rem 1.75rem;margin-bottom:2rem;">
+            <p style="font-family:var(--font-head);font-size:1rem;font-weight:600;color:var(--black);line-height:1.65;font-style:italic;">"Eu não queria criar uma marca de moda. Eu queria resolver um problema que me irritava todo dia — e que eu sabia que não era só meu."</p>
+            <p style="font-size:.78rem;color:var(--gray-mid);margin-top:.75rem;font-weight:600;">— Gisele Monsores, fundadora</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:.65rem;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="width:32px;height:32px;border-radius:50%;background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;">🎯</span>
+              <span style="font-size:.82rem;color:var(--gray-dark);line-height:1.5;"><strong style="color:var(--black);">PMO & Estrategista</strong> — pensa em processos, não em improviso</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="width:32px;height:32px;border-radius:50%;background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;">💼</span>
+              <span style="font-size:.82rem;color:var(--gray-dark);line-height:1.5;"><strong style="color:var(--black);">Empresária</strong> — sabe o custo real de cada minuto desperdiçado</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="width:32px;height:32px;border-radius:50%;background:rgba(184,94,255,.1);border:1px solid rgba(184,94,255,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;">👩‍👦</span>
+              <span style="font-size:.82rem;color:var(--gray-dark);line-height:1.5;"><strong style="color:var(--black);">Mãe</strong> — zero tolerância para tarefa que pode ser eliminada</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- direita — história -->
+        <div class="reveal">
+          <p style="font-size:.98rem;line-height:1.9;color:var(--gray-dark);margin-bottom:1.25rem;">Era mais uma manhã com agenda lotada, reunião em 40 minutos e uma pilha de camisetas dos filhos esperando para ser passada. Camisetas com aquele cheiro forte de suor de treino que a lavagem não conseguia tirar — e que precisavam de ferro antes de qualquer coisa.</p>
+
+          <p style="font-size:.98rem;line-height:1.9;color:var(--gray-dark);margin-bottom:1.25rem;">Gisele Monsores — PMO, especialista em OKRs, palestrante, mentora e mãe — olhou para aquela pilha e pensou com a cabeça de quem passa a vida inteira otimizando processos: <strong style="color:var(--black);">"Isso aqui é um gargalo. E gargalo tem solução."</strong></p>
+
+          <p style="font-size:.98rem;line-height:1.9;color:var(--gray-dark);margin-bottom:1.25rem;">A pergunta não era "que camiseta bonita eu posso criar". A pergunta era outra, muito mais estratégica: <em style="color:var(--purple);">que tecido elimina o problema do odor, dispensa o ferro, dura mais e ainda carrega uma identidade que represente quem usa?</em></p>
+
+          <p style="font-size:.98rem;line-height:1.9;color:var(--gray-dark);margin-bottom:1.25rem;">A resposta foi o modal premium. A metodologia foi a mesma de qualquer bom projeto: pesquisa, teste, ajuste e entrega. O resultado foi a StratGeek.Wear — uma marca que não vende roupa. Vende tempo de volta. Vende a leveza de sair de casa sem ferro, sem cheiro, sem preocupação.</p>
+
+          <p style="font-size:.98rem;line-height:1.9;color:var(--gray-dark);margin-bottom:2rem;">E vende identidade — porque cada peça carrega uma frase que diz, sem precisar explicar, quem você é e o que você entrega.</p>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAIXA LÓGICA DA MARCA -->
+    <div style="background:var(--black);padding:5rem 8%;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(184,94,255,.14) 0%,transparent 65%);pointer-events:none;"></div>
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(184,94,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(184,94,255,.04) 1px,transparent 1px);background-size:40px 40px;"></div>
+      <div style="max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+        <div style="font-family:var(--font-mono);font-size:.62rem;color:rgba(184,94,255,.6);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.5rem;">// a lógica por trás da marca</div>
+        <h3 style="font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.4rem);font-weight:700;color:var(--white);letter-spacing:-.025em;line-height:1.3;margin-bottom:1.5rem;">Se você aplica <span style="color:var(--neon);">performance</span> na sua carreira,<br>nos seus projetos e na sua vida —<br>por que a sua <span style="color:var(--neon);">roupa</span> seria diferente?</h3>
+        <p style="font-size:.98rem;color:rgba(255,255,255,.55);line-height:1.8;max-width:600px;margin:0 auto 2.5rem;">A StratGeek.Wear é a resposta para quem já otimizou tudo e só faltava otimizar o guarda-roupa.</p>
+        <div style="display:inline-flex;align-items:center;gap:2.5rem;flex-wrap:wrap;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;color:var(--neon);">0</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem;letter-spacing:.06em;text-transform:uppercase;">minutos passando roupa</div>
+          </div>
+          <div style="width:1px;height:40px;background:rgba(255,255,255,.1);"></div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;color:var(--neon);">100%</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem;letter-spacing:.06em;text-transform:uppercase;">modal premium</div>
+          </div>
+          <div style="width:1px;height:40px;background:rgba(255,255,255,.1);"></div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;color:var(--neon);">∞</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem;letter-spacing:.06em;text-transform:uppercase;">tempo de volta pra você</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="missao-grid">
+      <div class="missao-card reveal">
+        <div class="missao-icon">🎯</div>
+        <h3>Missão</h3>
+        <p>Devolver tempo para quem não tem tempo a perder. Criamos roupas que trabalham por você — que não precisam de ferro, não retêm odor e duram mais — para que cada minuto que seria gasto cuidando da roupa vire energia pra quem importa: você, sua família, seu trabalho, sua vida.</p>
+      </div>
+      <div class="missao-card reveal">
+        <div class="missao-icon">🌍</div>
+        <h3>Visão</h3>
+        <p>Ser a marca que redefiniu o que significa vestir com inteligência. Não apenas no Brasil — mas em qualquer lugar onde exista alguém que pensa estrategicamente, entrega resultado e recusa o piloto automático. Queremos ser reconhecidos como a grife de quem performa — dentro e fora do trabalho.</p>
+      </div>
+      <div class="missao-card reveal">
+        <div class="missao-icon">⚡</div>
+        <h3>Propósito</h3>
+        <p>A StratGeek.Wear existe porque roupa também pode ser uma decisão inteligente. Nascemos da frustração real de quem tem muito a entregar e pouco tempo para o trivial. Cada peça que criamos carrega uma pergunta silenciosa: <em>e se a sua roupa fosse tão eficiente quanto você?</em> Esse é o nosso propósito. Essa é a nossa provocação.</p>
+      </div>
+    </div>
+    <div class="valores-section">
+      <span class="section-label">O que nos move</span>
+      <h2 class="sec-title" style="color:var(--white);">Nossos <em>valores.</em></h2>
+      <div class="valores-grid">
+        <div class="valor-card reveal"><h4>Inteligência aplicada</h4><p>Tudo tem propósito — pensamos soluções, não produtos.</p></div>
+        <div class="valor-card reveal"><h4>Tempo é poder</h4><p>Cada minuto economizado é energia para o que realmente importa.</p></div>
+        <div class="valor-card reveal"><h4>Sustentabilidade real</h4><p>Moda que respeita o planeta com responsabilidade e consciência.</p></div>
+        <div class="valor-card reveal"><h4>Autenticidade</h4><p>Celebramos o estilo de quem pensa diferente e vive com propósito.</p></div>
+        <div class="valor-card reveal"><h4>Tecnologia humana</h4><p>Inovação feita para simplificar, não complicar.</p></div>
+        <div class="valor-card reveal"><h4>Performance sem esforço</h4><p>Conforto, eficiência e elegância — sem perder identidade.</p></div>
+      </div>
+    </div>
+    <div class="team-section">
+      <span class="section-label">Comunidade</span>
+      <h2 class="sec-title">Quem já veste <em>StratGeek.Wear.</em></h2>
+      <p style="font-size:.9rem;color:var(--gray-dark);margin-bottom:2.5rem;max-width:540px;line-height:1.7;">De desenvolvedores a diretores. De lutadores a líderes. Quem experimenta, não volta para a camiseta comum.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;">
+
+        <div class="dep-card reveal">
+          <p class="dep-text">"Eu criei a StratGeek.Wear porque precisava dela. Sou PMO, empresária, mãe — e durante anos passei tempo demais cuidando de roupa que poderia estar cuidando de coisa que importa de verdade. A camiseta que abraça, que não precisa de ferro, que não guarda cheiro de suor dos filhos depois do treino — isso era o sonho. Quando finalmente encontrei o tecido certo e vesti pela primeira vez, foi exatamente a libertação que eu imaginava. Só que melhor."</p>
+          <div class="dep-author">
+            <div class="dep-avatar" style="background:var(--purple);">G</div>
+            <div>
+              <div class="dep-name">Gisele Monsores</div>
+              <div class="dep-role">Diretora de Projetos — PMO · São Paulo</div>
+              <div class="dep-tags"><span class="dep-tag">Liderança</span><span class="dep-tag">PMO</span><span class="dep-tag">Neuroliderança</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dep-card reveal">
+          <p class="dep-text">"Treino muay thai e tô no modo ENEM agora — estudo, treino, estudo de novo. Não tenho tempo pra nada, muito menos pra passar roupa. Qualquer camiseta que eu tinha absorvia o cheiro do suor do treino e não saia mais. Com a StratGeek não acontece isso. Lavei, secou rápido, sem cheiro nenhum. E ainda não precisa passar. Pra mim isso já vale tudo."</p>
+          <div class="dep-author">
+            <div class="dep-avatar" style="background:var(--neon);">T</div>
+            <div>
+              <div class="dep-name">Tomaz Selvatice, 18</div>
+              <div class="dep-role">Atleta de Muay Thai · São Paulo</div>
+              <div class="dep-tags"><span class="dep-tag">Esporte</span><span class="dep-tag">Performance</span><span class="dep-tag">Gen Z</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dep-card reveal">
+          <p class="dep-text">"Gerencio projeto, cliente, time e prazo ao mesmo tempo. Cada decisão que eu não preciso tomar é energia que vai pro trabalho. Escolher roupa, passar roupa, preocupar com amassado na reunião — isso tudo é ruído. A StratGeek tirou esse ruído da minha rotina. Parece simples, mas quem vive no ritmo de entrega sabe exatamente quanto isso vale."</p>
+          <div class="dep-author">
+            <div class="dep-avatar" style="background:#2d6a4f;">M</div>
+            <div>
+              <div class="dep-name">Marcelo Figueiredo, 35</div>
+              <div class="dep-role">Gerente de Projetos — GP · Campinas</div>
+              <div class="dep-tags"><span class="dep-tag">GP</span><span class="dep-tag">Gestão</span><span class="dep-tag">Agilidade</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dep-card reveal">
+          <p class="dep-text">"Dev. Minha vida é home office, calls e código. Ganhei a primeira StratGeek e achei que ia ser mais uma camiseta — vesti por educação, sabe como é. Mas o tecido me surpreendeu do zero. Não precisa passar, não retém odor nem depois de um dia longo de reunião, e o caimento continua igual depois de lavar. Fui atrás de mais. Hoje é meu uniforme oficial — e não troco."</p>
+          <div class="dep-author">
+            <div class="dep-avatar" style="background:#1d4e89;">A</div>
+            <div>
+              <div class="dep-name">Davi Santos, 22</div>
+              <div class="dep-role">Desenvolvedor · Remote</div>
+              <div class="dep-tags"><span class="dep-tag">Dev</span><span class="dep-tag">Remote</span><span class="dep-tag">Tech</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer id="sobre-footer"></footer>
+</div>
+
+<!-- TECNOLOGIA -->
+<div class="page" id="page-tecnologia">
+  <div class="tec-page">
+    <div class="tec-hero">
+      <span class="section-label">O Futuro do Vestir</span>
+      <h2 class="sec-title">O tecido que pensa <em>como você.</em></h2>
+      <!-- GATILHO 1 -->
+      <p class="tec-gatilho">Existem camisetas feitas para <em>esconder o suor</em>.<br>A nossa foi feita para <em>mostrar quem você é</em>.</p>
+      <p class="sec-sub" style="color:var(--gray-mid);margin:0 auto 3rem;">Feito da celulose da madeira de faia, cultivada em florestas sustentáveis — o modal une ciência, tecnologia e propósito em uma única experiência.</p>
+      <div class="tec-stats">
+        <div class="tec-stat reveal"><div class="tec-stat-n">20x</div><p class="tec-stat-l">menos água que o algodão no processo produtivo</p></div>
+        <div class="tec-stat reveal"><div class="tec-stat-n">50%</div><p class="tec-stat-l">menos emissão de carbono que tecidos convencionais</p></div>
+        <div class="tec-stat reveal"><div class="tec-stat-n">0</div><p class="tec-stat-l">necessidade de ferro após a lavagem</p></div>
+        <div class="tec-stat reveal"><div class="tec-stat-n">100%</div><p class="tec-stat-l">biodegradável e renovável</p></div>
+      </div>
+    </div>
+    <div class="tec-benefits">
+      <span class="section-label">Benefícios</span>
+      <h2 class="sec-title">Tudo que o modal <em>entrega.</em></h2>
+      <div class="tec-ben-grid">
+        <div class="tec-ben reveal"><div class="tec-ben-icon">⚡</div><h3>Não precisa passar</h3><p>Naturalmente resistente a rugas. O modal se ajusta e alisa sozinho no corpo.</p></div>
+        <div class="tec-ben reveal"><div class="tec-ben-icon">🌿</div><h3>Antiodor natural</h3><p>Estrutura respirável evita proliferação de bactérias. Frescor garantido.</p></div>
+        <div class="tec-ben reveal"><div class="tec-ben-icon">💧</div><h3>Secagem rápida</h3><p>Lavou, secou, vestiu. Sem espera, sem preocupação.</p></div>
+        <div class="tec-ben reveal"><div class="tec-ben-icon">🎨</div><h3>Não desbota</h3><p>O modal retém corantes com eficiência. Cores vivas por muito mais tempo.</p></div>
+        <div class="tec-ben reveal"><div class="tec-ben-icon">♻</div><h3>Sustentabilidade real</h3><p>20x menos água e 50% menos carbono. Biodegradável e de ciclo fechado.</p></div>
+        <div class="tec-ben reveal"><div class="tec-ben-icon">✨</div><h3>Conforto absoluto</h3><p>Toque ultra macio, regula temperatura corporal em qualquer estação.</p></div>
+      </div>
+    </div>
+
+    <!-- GATILHO 4 -->
+    <div style="background:var(--black);padding:4.5rem 8%;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(184,94,255,.18) 0%,transparent 65%);pointer-events:none;"></div>
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(184,94,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(184,94,255,.04) 1px,transparent 1px);background-size:40px 40px;"></div>
+      <div style="max-width:820px;margin:0 auto;text-align:center;position:relative;z-index:1;" class="reveal">
+        <div style="font-family:var(--font-mono);font-size:.62rem;color:rgba(184,94,255,.55);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.25rem;">// diferencial StratGeek.Wear</div>
+        <h3 style="font-family:var(--font-head);font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:700;color:var(--white);letter-spacing:-.02em;line-height:1.3;margin-bottom:1rem;">Mesma fibra das melhores<br>marcas tech do mercado.</h3>
+        <p style="font-family:var(--font-head);font-size:clamp(1.1rem,2.2vw,1.7rem);font-weight:700;color:var(--neon);line-height:1.35;margin-bottom:1.75rem;">Com algo que elas não têm:<br>uma frase que te representa.</p>
+        <div style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.05);border:1px solid rgba(184,94,255,.3);border-radius:50px;padding:.55rem 1.4rem;">
+          <span style="font-family:var(--font-mono);font-size:.75rem;color:rgba(255,255,255,.6);">Modal 95% + Elastano 5%</span>
+          <span style="color:rgba(184,94,255,.4);">·</span>
+          <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--neon);font-weight:600;">o equilíbrio que faltava</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tec-compare">
+      <span class="section-label">Comparativo</span>
+      <h2 class="sec-title">Modal vs. <em>outros tecidos.</em></h2>
+      <table class="tec-table">
+        <thead><tr><th>Característica</th><th>Modal (StratGeek)</th><th>Algodão</th><th>Viscose</th><th>Poliéster</th></tr></thead>
+        <tbody>
+          <tr><td>Não precisa passar</td><td class="yes">✔ Sim</td><td class="no">✘ Não</td><td class="no">✘ Não</td><td class="no">✘ Não</td></tr>
+          <tr><td>Antiodor natural</td><td class="yes">✔ Sim</td><td class="no">✘ Não</td><td class="no">✘ Não</td><td class="no">✘ Não</td></tr>
+          <tr><td>Biodegradável</td><td class="yes">✔ Sim</td><td class="yes">✔ Sim</td><td>Parcial</td><td class="no">✘ Não</td></tr>
+          <tr><td>Sustentabilidade</td><td class="yes">⬆ Alta</td><td>Muita água</td><td>Média</td><td class="no">⬇ Baixa</td></tr>
+          <tr><td>Secagem</td><td class="yes">Rápida</td><td>Moderada</td><td>Rápida</td><td>Muito rápida</td></tr>
+          <tr><td>Toque</td><td class="yes">Macio e sedoso</td><td>Macio</td><td>Fluido</td><td>Liso e sintético</td></tr>
+          <tr><td>Identidade</td><td class="yes">✔ Tem propósito</td><td class="no">Genérica</td><td class="no">Genérica</td><td class="no">Genérica</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tec-care">
+      <span class="section-label">Cuidados</span>
+      <h2 class="sec-title">Como cuidar da sua <em>peça.</em></h2>
+      <div class="care-grid">
+        <div class="care-item"><span>🧼</span><p>Lave à mão ou em ciclo delicado até 30°C</p></div>
+        <div class="care-item"><span>🚫</span><p>Evite amaciantes e alvejantes — danificam as fibras</p></div>
+        <div class="care-item"><span>☀</span><p>Seque à sombra, preferencialmente no varal</p></div>
+        <div class="care-item"><span>♨</span><p>Não use secadora nem ferro quente (máx. 110°C)</p></div>
+      </div>
+      <div style="margin-top:2rem;background:linear-gradient(135deg,rgba(184,94,255,.15),rgba(106,13,173,.1));border:1.5px solid var(--neon);border-radius:10px;padding:1.5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;">
+        <div>
+          <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--neon);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;">💡 Dica StratGeek</div>
+          <p style="font-family:var(--font-head);font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.55;">Pendure, seque naturalmente e vista — sem esforço, sem ferro, sem tempo perdido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="tec-footer"></footer>
+</div>
+
+<!-- CONTATO -->
+<div class="page" id="page-contato">
+  <div class="contato-page">
+    <span class="section-label">Fale Conosco</span>
+    <h2 class="sec-title">Como podemos te <em>ajudar?</em></h2>
+    <p class="sec-sub">Dúvidas sobre pedidos, tamanhos, personalização — estamos aqui.</p>
+    <div class="contato-inner">
+      <div class="reveal">
+        <a href="https://wa.me/5511976944190" target="_blank" class="channel"><div class="ch-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div><div><div class="ch-title">WhatsApp</div><div class="ch-info">(11) 97694-4190 · Seg–Sex 9h–18h</div></div></a>
+        <a href="mailto:contato@stratgeekwear.com.br" class="channel"><div class="ch-icon">✉</div><div><div class="ch-title">E-mail</div><div class="ch-info">contato@stratgeekwear.com.br · até 24h</div></div></a>
+        <div class="channel"><div class="ch-icon">📍</div><div><div class="ch-title">Localização</div><div class="ch-info">Vila Mariana, São Paulo — SP</div></div></div>
+        <div class="channel"><div class="ch-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="url(#igGrad)"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="25%" style="stop-color:#e6683c"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="75%" style="stop-color:#cc2366"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div><div class="ch-title">Instagram</div><div class="ch-info"><a href="https://www.instagram.com/stratgeekwear/" target="_blank" style="color:var(--neon);text-decoration:none;">@stratgeekwear</a></div></div></div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="frow">
+          <div class="cfg"><label>Nome</label><input type="text" placeholder="Seu nome"/></div>
+          <div class="cfg"><label>E-mail</label><input type="email" placeholder="seu@email.com"/></div>
+        </div>
+        <div class="cfg"><label>Assunto</label>
+          <select>
+            <option value="">Selecione um assunto</option>
+            <option>Dúvida sobre pedido</option>
+            <option>Troca ou devolução</option>
+            <option>Personalização de peça</option>
+            <option>Tamanhos e medidas</option>
+            <option>Parcerias</option>
+            <option>Votação do mascote</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="cfg"><label>Mensagem</label><textarea placeholder="Descreva sua dúvida ou pedido..."></textarea></div>
+        <button class="btn-submit">Enviar mensagem →</button>
+      </div>
+    </div>
+  </div>
+  <div class="faq-page">
+    <span class="section-label">Perguntas Frequentes</span>
+    <h2 class="sec-title">FAQ</h2>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+  <footer id="contato-footer"></footer>
+</div>
+
+<script>
+// COUNTDOWN — 7 dias a partir de hoje
+const PROMO_END = new Date(Date.now() + 7*24*60*60*1000);
+function updateCountdown(){
+  const diff = PROMO_END - new Date();
+  if(diff <= 0){document.getElementById('countdown').innerHTML='<span style="color:var(--neon);font-family:var(--font-head);font-size:1rem;font-weight:700;">Promoção encerrada</span>';return;}
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  const f=n=>String(n).padStart(2,'0');
+  document.getElementById('cd-days').textContent=f(d);
+  document.getElementById('cd-hours').textContent=f(h);
+  document.getElementById('cd-mins').textContent=f(m);
+  document.getElementById('cd-secs').textContent=f(s);
+}
+updateCountdown();setInterval(updateCountdown,1000);
+
+// PRODUCTS — com tag de identidade (GATILHO 3)
+const PRODUCTS = [
+  {id:1,cat:'frases',img:'https://www.stratgeekwear.com.br/uploads/products/69ba098ac1ae1_6966cffa-314b-4e94-95a5-21ca3845bc3b.png',catLabel:'Linha Strat Mode',name:'"Menos ego, mais insight."',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'veste quem lidera com propósito · modal preta'},
+  {id:2,cat:'frases',img:'https://www.stratgeekwear.com.br/uploads/products/69ba0944d3081_0964ca76-7936-4435-b9ad-b5486c5d7864.png',catLabel:'Linha Strat Mode',name:'"Onde o ego cala, o propósito fala."',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'veste quem entrega resultado · modal preta'},
+  {id:3,cat:'frases',img:'https://www.stratgeekwear.com.br/uploads/products/69ba08432874b_8edabc6e-40f0-483e-a7d7-3cf3c67f74fd.png',catLabel:'Linha Strat Mode',name:'"Código limpo, mente suja."',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'veste quem pensa em dados · modal preta'},
+  {id:4,cat:'frases',img:'',emoji:'💻',catLabel:'Linha Strat Mode',name:'"Commit, push, reza forte."',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'veste o dev que sabe o que é vida · modal preta'},
+  {id:5,cat:'frases',img:'',emoji:'🎯',catLabel:'Linha Strat Mode',name:'"Não dou bom dia, dou status de progresso."',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'veste quem vive em modo performance · modal preta'},
+  {id:6,cat:'lisas',img:'',emoji:'⚫',catLabel:'Camiseta Lisa',name:'Camiseta Lisa Preta — Modal Premium',pix:'R$ 99,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'smart basic · modal 95% + elastano'},
+  {id:61,cat:'lisas',img:'',emoji:'🤍',catLabel:'Camiseta Lisa',name:'Camiseta Lisa Off-White — Modal Premium',pix:'R$ 99,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'',identity:'smart basic · modal 95% + elastano'},
+  {id:7,cat:'mascote',img:'',emoji:'🤖',catLabel:'Edição Mascote',name:'Edição Mascote Preta',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'EXCLUSIVA',identity:'edição especial de lançamento'},
+  {id:8,cat:'mascote',img:'',emoji:'🤍',catLabel:'Edição Mascote',name:'Edição Mascote Off-White',pix:'R$ 109,90',card:'R$ 119,90',sizes:['P','M','G','GG'],badge:'EXCLUSIVA',identity:'edição especial de lançamento'},
+  {id:9,cat:'souvenir',img:'https://www.stratgeekwear.com.br/uploads/products/69ba08ddad7c2_4078ae94-6c29-443e-a7f3-c2b5b8ba7e4f.png',catLabel:'Souvenir',name:'Caneca Personalizada',pix:'R$ 69,90',card:'R$ 79,90',sizes:[],badge:'sob encomenda',identity:'performance também está nos detalhes'},
+  {id:10,cat:'souvenir',img:'',emoji:'🌿',catLabel:'Souvenir',name:'Ecobag Personalizada',pix:'R$ 79,90',card:'R$ 89,90',sizes:[],badge:'sob encomenda',identity:'performance também está nos detalhes'},
+];
+
+function productCardHTML(p){
+  const isPromo = p.card === 'R$ 109,90' || p.card === 'R$ 99,90';
+  const originalPrice = isPromo ? 'R$ 119,90' : null;
+  return `<div class="product-card">
+    <div class="pc-img">
+      ${p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy"/>`:
+       `<div class="pc-emoji">${p.emoji||'👕'}</div>`}
+      ${p.badge?`<span class="pc-badge ${p.badge==='EXCLUSIVA'?'':'dark'}">${p.badge}</span>`:''}
+      ${isPromo?`<span style="position:absolute;top:.7rem;right:.7rem;background:#22c55e;color:#fff;font-family:var(--font-head);font-size:.58rem;font-weight:700;padding:.2rem .5rem;border-radius:2px;letter-spacing:.04em;">PROMO</span>`:''}
+    </div>
+    <div class="pc-body">
+      <div class="pc-cat">${p.catLabel}</div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-prices">
+        <div style="font-size:.75rem;color:var(--gray-dark);font-weight:500;margin-bottom:.15rem;">Débito ou crédito à vista: <strong style="color:var(--black);">${p.card}</strong></div>
+        <div style="background:rgba(184,94,255,.07);border:1px solid rgba(184,94,255,.2);border-radius:5px;padding:.5rem .7rem;margin:.4rem 0;">
+          <div style="font-size:.62rem;color:var(--purple);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem;">Pagamento com PIX</div>
+          <div style="font-family:var(--font-head);font-size:1.25rem;font-weight:700;color:var(--purple);">${p.pix}</div>
+          ${isPromo?`<div style="font-size:.65rem;color:var(--purple);margin-top:.15rem;font-weight:600;">Kit 2: R$99,90 · Kit 3: R$89,90 cada</div>`:''}
+        </div>
+        <div style="font-size:.62rem;color:var(--gray-mid);margin-top:.15rem;">Parcelado: consulte as taxas da operadora no checkout</div>
+      </div>
+      <div class="pc-identity">${p.identity}</div>
+      <div class="pc-foot">
+        <div class="pc-sizes">${p.sizes.map(s=>`<span class="sz">${s}</span>`).join('')}</div>
+        <a href="https://www.stratgeekwear.com.br" target="_blank" class="btn-comprar">Comprar</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('home-featured').innerHTML = PRODUCTS.slice(0,4).map(productCardHTML).join('');
+
+// Seções por linha na página Coleções
+const LINHAS = [
+  {
+    cat: 'frases',
+    label: 'Linha Strat Mode',
+    sublabel: 'Camisetas com Frases Estratégicas',
+    desc: 'Frases que provocam, identificam e comunicam quem você é. Cada estampa é uma declaração.',
+    color: 'var(--neon)'
+  },
+  {
+    cat: 'lisas',
+    label: 'Essentials',
+    sublabel: 'Smart Basics',
+    desc: 'O minimalismo elevado. Modal premium sem estampa — para quem entende que menos é mais.',
+    color: 'var(--neon)'
+  },
+  {
+    cat: 'mascote',
+    label: 'Edição Mascote',
+    sublabel: 'Coleção Exclusiva de Lançamento',
+    desc: 'Peças exclusivas com o mascote oficial da StratGeek.Wear. Poucas unidades. Sem reposição.',
+    color: 'var(--neon)',
+    alert: true
+  },
+  {
+    cat: 'souvenir',
+    label: 'Souvenirs',
+    sublabel: 'Itens de Lifestyle & Escritório',
+    desc: 'Performance também está nos detalhes. Canecas e ecobags personalizadas sob encomenda.',
+    color: 'var(--neon)'
+  },
+];
+
+function renderColSections(){
+  const container = document.getElementById('col-sections');
+  if(!container) return;
+  container.innerHTML = LINHAS.map(linha => {
+    const items = PRODUCTS.filter(p => p.cat === linha.cat);
+    if(!items.length) return '';
+    return `
+      <div style="margin-bottom:4rem;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--gray-light);">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--neon);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.35rem;">${linha.sublabel}</div>
+            <h2 style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.3rem;">${linha.label}</h2>
+            <p style="font-size:.82rem;color:var(--gray-mid);max-width:480px;line-height:1.55;">${linha.desc}</p>
+          </div>
+          ${linha.alert ? `<div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(184,94,255,.08);border:1px solid rgba(184,94,255,.3);border-radius:5px;padding:.45rem 1rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--neon);display:inline-block;"></span><span style="font-family:var(--font-head);font-size:.72rem;font-weight:700;color:var(--neon);">Últimas unidades</span></div>` : ''}
+        </div>
+        <div class="products-grid">${items.map(productCardHTML).join('')}</div>
+      </div>`;
+  }).join('');
+}
+renderColSections();
+
+// ── SISTEMA DE VOTAÇÃO ──
+const VOTE_NAMES = [
+  {name:'Kron', desc:'Referência a cronologia, tempo e processamento. O sistema que mede, registra e entrega — sempre no ritmo certo.'},
+  {name:'Axon', desc:'Referência ao neurônio — a unidade de transmissão de inteligência. O ponto onde dado vira decisão.'},
+  {name:'Grok', desc:'Termo clássico da cultura hacker: entender algo de forma profunda e total. Quem é do universo tech, já sabe.'},
+];
+
+const VOTE_END = new Date('2026-07-29T23:59:59');
+const votacaoAberta = () => new Date() < VOTE_END;
+
+let voteCounts = {Kron:0, Axon:0, Grok:0};
+let meuVoto = localStorage.getItem('sgw_v2_uservote') || null;
+let votoSelecionado = null;
+
+const localData = JSON.parse(localStorage.getItem('sgw_v2_counts') || 'null');
+if(localData){ voteCounts = localData; }
+
+function totalVotos(){ return Object.values(voteCounts).reduce((a,b)=>a+b,0); }
+
+function renderVoteCountdown(){
+  const el = document.getElementById('vote-countdown');
+  if(!el) return;
+  if(!votacaoAberta()){ el.textContent = 'Votação encerrada · 29 de julho de 2026'; return; }
+  const diff = VOTE_END - new Date();
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  el.textContent = `Encerra em ${d}d ${h}h ${m}m · 29 de julho de 2026`;
+  setTimeout(renderVoteCountdown, 30000);
+}
+
+function renderVoteGrid(){
+  const grid = document.getElementById('vote-grid');
+  if(!grid) return;
+  const total = totalVotos();
+  const encerrada = !votacaoAberta();
+
+  if(encerrada){
+    const winner = Object.entries(voteCounts).sort((a,b)=>b[1]-a[1])[0][0];
+    const bwrap = document.querySelector('.vote-btn-wrap');
+    if(bwrap) bwrap.style.display='none';
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2.5rem 1rem;">
+      <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--neon);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem;">// votação encerrada</div>
+      <div style="font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.5rem;">O nome escolhido pela comunidade:</div>
+      <div style="font-family:var(--font-orb);font-size:3.5rem;font-weight:900;color:var(--neon);margin:.5rem 0 1rem;">${winner}</div>
+      <div style="font-size:.82rem;color:rgba(255,255,255,.45);">Obrigado a todos que votaram. #SGW</div>
+    </div>
+    ${VOTE_NAMES.map(n => {
+      const pct = total>0 ? Math.round((voteCounts[n.name]/total)*100) : 0;
+      return '<div class="vote-card '+(n.name===winner?'selected':'')+'">'
+        +'<div class="vote-name">'+n.name+(n.name===winner?' 👑':'')+'</div>'
+        +'<div class="vote-desc">'+n.desc+'</div>'
+        +'<div class="vote-bar-wrap"><div class="vote-bar" style="width:'+pct+'%"></div></div>'
+        +'<div class="vote-count">'+pct+'% · '+voteCounts[n.name]+' votos</div>'
+        +'</div>';
+    }).join('')}`;
+    return;
+  }
+
+  grid.innerHTML = VOTE_NAMES.map(n => {
+    const pct = total>0 ? Math.round((voteCounts[n.name]/total)*100) : 0;
+    const sel = votoSelecionado===n.name || meuVoto===n.name;
+    return '<div class="vote-card '+(sel?'selected':'')+'" onclick="selecionarVoto(\'' + n.name + '\')" style="cursor:pointer;">'
+      +(meuVoto===n.name?'<span style="position:absolute;top:.6rem;right:.9rem;color:var(--neon);">✓</span>':'')
+      +'<div class="vote-name">'+n.name+'</div>'
+      +'<div class="vote-desc">'+n.desc+'</div>'
+      +'<div class="vote-bar-wrap"><div class="vote-bar" style="width:'+(meuVoto?pct:0)+'%"></div></div>'
+      +'<div class="vote-count">'+(meuVoto&&total>0 ? pct+'% · '+voteCounts[n.name]+' votos' : (sel&&!meuVoto?'✓ selecionado':'clique para selecionar'))+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function selecionarVoto(nome){
+  if(meuVoto) return;
+  votoSelecionado = nome;
+  renderVoteGrid();
+}
+
+function submitVote(){
+  if(!votacaoAberta()){
+    alert('Votação encerrada em 29/07/2026. Obrigado!');
+    return;
+  }
+  if(meuVoto){
+    const m = document.getElementById('vote-msg');
+    m.style.display='block';
+    m.textContent = '> você já votou em: '+meuVoto+'. obrigado, estrategista! #SGW';
+    return;
+  }
+  if(!votoSelecionado){
+    alert('Clique em um dos nomes para selecionar antes de confirmar.');
+    return;
+  }
+  meuVoto = votoSelecionado;
+  voteCounts[meuVoto] = (voteCounts[meuVoto]||0)+1;
+  localStorage.setItem('sgw_v2_uservote', meuVoto);
+  localStorage.setItem('sgw_v2_counts', JSON.stringify(voteCounts));
+// Firebase: ativar após configuração (ver instruções para o Davi)
+  renderVoteGrid();
+  const m = document.getElementById('vote-msg');
+  m.style.display='block';
+  m.textContent = '> voto registrado. você escolheu: '+meuVoto+'. obrigado, estrategista. #SGW';
+}
+
+// initFirebaseVoting: ativar após configuração no servidor
+
+// Firebase desativado — ativar após configuração no servidor
+
+renderVoteGrid();
+renderVoteCountdown();
+
+// PAGE NAV
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  setTimeout(initReveal,100);
+}
+
+// PERSONALIZAR
+let selectedFont='Space Grotesk';
+function selectFont(font,el){
+  selectedFont=font;
+  document.querySelectorAll('.font-opt').forEach(f=>f.classList.remove('selected'));
+  el.classList.add('selected');
+  updatePreview();
+}
+function updatePreview(){
+  const frase=document.getElementById('pers-frase').value||'Sua frase aqui.';
+  const tipo=document.getElementById('pers-type').value;
+  const tam=document.getElementById('pers-size').value;
+  document.getElementById('preview-phrase').textContent=frase;
+  document.getElementById('preview-phrase').style.fontFamily="'"+selectedFont+"', sans-serif";
+  document.getElementById('prev-fonte').textContent=selectedFont;
+  document.getElementById('prev-tamanho').textContent=tam;
+  const cards={camiseta:'R$ 149,90',caneca:'R$ 79,90',ecobag:'Consultar'};
+  const pixs={camiseta:'R$ 107,91 pagamento com PIX',caneca:'R$ 62,91 pagamento com PIX',ecobag:'R$ 71,91 pagamento com PIX'};
+  const labels={camiseta:'Camiseta Preta — Modal Premium',caneca:'Caneca Personalizada',ecobag:'Ecobag Personalizada'};
+  document.getElementById('prev-preco').textContent=cards[tipo];
+  document.getElementById('prev-pix').textContent=pixs[tipo];
+  document.getElementById('prev-produto').textContent=labels[tipo];
+}
+function submitPersonalizacao(){
+  const nome=document.getElementById('pers-nome').value;
+  const email=document.getElementById('pers-email').value;
+  const frase=document.getElementById('pers-frase').value;
+  const confirmado=document.getElementById('pers-confirm').checked;
+  if(!nome||!email||!frase){alert('Preencha nome, e-mail e frase para continuar.');return;}
+  if(!confirmado){alert('Confirme que revisou e está de acordo com a personalização antes de prosseguir.');return;}
+  const tipo=document.getElementById('pers-type').value;
+  const tam=document.getElementById('pers-size').value;
+  const cor=document.getElementById('pers-cor')?document.getElementById('pers-cor').value:'Preta';
+  const obs=document.getElementById('pers-obs').value;
+  const body=encodeURIComponent(
+    `PEDIDO DE PERSONALIZAÇÃO — StratGeek.Wear
+` +
+    `========================================
+
+` +
+    `Produto: ${tipo}
+` +
+    `Cor: ${cor}
+` +
+    `Tamanho: ${tam}
+` +
+    `Fonte: ${selectedFont}
+` +
+    `Frase: "${frase}"
+` +
+    `Observações: ${obs||'Nenhuma'}
+
+` +
+    `========================================
+` +
+    `Cliente: ${nome}
+` +
+    `E-mail: ${email}
+
+` +
+    `O cliente confirmou que revisou todos os dados e está ciente de que o pedido entra em produção imediatamente após o pagamento.`
+  );
+  window.location.href=`mailto:contato@stratgeekwear.com.br?subject=Pedido de Personalização — StratGeek.Wear&body=${body}`;
+}
+
+// FAQ
+const FAQS=[
+  {q:'Como funciona a política de devolução?',a:'Troca e devolução gratuitas apenas para defeitos de fabricação, dentro de 7 dias após o recebimento. Para trocas por tamanho ou arrependimento, o frete de retorno fica por conta do cliente.'},
+  {q:'As camisetas desbotam na lavagem?',a:'Não. Feitas com modal premium 95% + elastano 5%, de alta durabilidade. Lave em água fria, do avesso e sem amaciante para preservar as cores e o silk por muito mais tempo.'},
+  {q:'Quais são as formas de pagamento?',a:'Aceitamos PIX, débito e crédito. À vista no débito ou crédito: sem acréscimos. Parcelado em até 12x: consulte as taxas da operadora do seu cartão diretamente no checkout. Todos os pagamentos processados com total segurança.'},
+  {q:'Como é calculado o frete?',a:'O frete é calculado no checkout de acordo com o seu CEP e o peso do pedido. Utilizamos os Correios para entrega em todo o Brasil.'},
+  {q:'Como funciona o desconto de lançamento?',a:'Na promoção de lançamento: 1 peça por R$109,90, kit 2 peças por R$99,90 cada, kit 3 peças por R$89,90 cada. Oferta válida por 7 dias a partir do lançamento.'},
+  {q:'Como funciona a personalização de peças?',a:'Itens personalizados são produzidos sob encomenda. Após confirmar os dados (frase, cor, fonte e tamanho) e concluir o pagamento, você recebe automaticamente um e-mail com o resumo exato do pedido. O item entra imediatamente em produção. Caso identifique algum erro após a compra, entre em contato imediatamente pelo e-mail contato@stratgeekwear.com.br com o número do pedido — faremos o possível para corrigir antes da produção definitiva. A responsabilidade pelas informações fornecidas é do cliente.'},
+  {q:'Quanto tempo demora para receber meu pedido?',a:'Camisetas em estoque: 3 a 7 dias úteis. Peças personalizadas: 7 a 14 dias úteis após aprovação da arte final.'},
+];
+document.getElementById('faq-list').innerHTML=FAQS.map((f,i)=>`
+  <div class="faq-item" id="faq${i}">
+    <button class="faq-q" onclick="toggleFAQ('faq${i}')">${f.q}<span class="faq-ico">+</span></button>
+    <div class="faq-a"><p>${f.a}</p></div>
+  </div>`).join('');
+
+function toggleFAQ(id){
+  const item=document.getElementById(id);
+  const ans=item.querySelector('.faq-a');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>{el.classList.remove('open');el.querySelector('.faq-a').style.maxHeight='0';});
+  if(!isOpen){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';}
+}
+
+// FOOTER
+const FOOTER_HTML=`<div style="background:var(--black);padding:4rem 8% 2rem;border-top:1px solid rgba(184,94,255,.2);">
+  <div class="ft">
+    <div>
+      <div class="ft-logo">&gt; StratGeek<span class="w">.Wear</span></div>
+      <p class="ft-tagline">"Use o que você pensa."</p>
+      <p class="ft-slogan">"Você não veste mais só uma camiseta. Você veste sua estratégia."</p>
+      <a href="https://www.instagram.com/stratgeekwear/" target="_blank" style="color:var(--neon);font-size:.78rem;font-weight:700;text-decoration:none;">@stratgeekwear ↗</a>
+    </div>
+    <div class="ft-col"><h5>Navegação</h5><ul>
+      <li><a onclick="showPage('home')">Início</a></li>
+      <li><a onclick="showPage('colecoes')">Coleções</a></li>
+      <li><a onclick="showPage('personalizar')">Personalizar</a></li>
+      <li><a onclick="showPage('sobre')">Sobre</a></li>
+      <li><a onclick="showPage('tecnologia')">Tecnologia</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Atendimento</h5><ul>
+      <li><a onclick="showPage('contato')">Fale Conosco</a></li>
+      <li><a onclick="showPage('contato')">FAQ</a></li>
+      <li><a onclick="showPage('colecoes')">Guia de Medidas</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Contato</h5><ul>
+      <li><a href="https://wa.me/5511976944190" target="_blank">(11) 97694-4190</a></li>
+      <li><a href="mailto:contato@stratgeekwear.com.br">contato@stratgeekwear.com.br</a></li>
+      <li><a href="https://www.instagram.com/stratgeekwear/" target="_blank">@stratgeekwear</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2025 <span>&gt; StratGeek.Wear</span>. Todos os direitos reservados.</div>
+    <div class="ft-cnpj">CNPJ: 55.037.327/0001-20 · Vila Mariana, São Paulo — SP</div>
+  </div>
+</div>`;
+['main-footer','col-footer','pers-footer','sobre-footer','tec-footer','contato-footer'].forEach(id=>{
+  const el=document.getElementById(id);if(el)el.innerHTML=FOOTER_HTML;
+});
+
+// REVEAL
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+  document.querySelectorAll('.page.active .reveal').forEach(el=>{el.classList.remove('visible');obs.observe(el);});
+}
+initReveal();
+</script>
+</body>
+</html>
